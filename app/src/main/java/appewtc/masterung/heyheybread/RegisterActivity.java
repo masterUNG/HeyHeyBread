@@ -1,5 +1,8 @@
 package appewtc.masterung.heyheybread;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -47,11 +50,47 @@ public class RegisterActivity extends AppCompatActivity {
         } else {
 
             //No Space
-
+            confirmRegister();
 
         } // if
 
     }   // clickSave
+
+    private void confirmRegister() {
+
+        AlertDialog.Builder objBuilder = new AlertDialog.Builder(this);
+        objBuilder.setIcon(R.drawable.icon_myaccount);
+        objBuilder.setTitle("โปรดตรวจสอบข้อมูล");
+        objBuilder.setMessage("User = " + userString + "\n" +
+                "Password = " + passwordString + "\n" +
+                "Name = " + nameString + "\n" +
+                "Surname = " + surnameString + "\n" +
+                "Address = " + addressString + "\n" +
+                "Phone = " + phoneString + "\n");
+        objBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                upDataMySQL();
+                dialogInterface.dismiss();
+            }
+        });
+        objBuilder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        objBuilder.show();
+
+    }   // confirmRegister
+
+    private void upDataMySQL() {
+
+
+        //Intent To MainActivity
+        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
+
+    }   // upDateMySQL
 
     private void bindWidget() {
         userEditText = (EditText) findViewById(R.id.edtUser);
