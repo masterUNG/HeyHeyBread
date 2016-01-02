@@ -41,6 +41,26 @@ public class ManageTABLE {
 
     }   // Constructor
 
+    public long addNewOrder(String strName,
+                            String strSurname,
+                            String strAddress,
+                            String strPhone,
+                            String strBread,
+                            String strPrice,
+                            String strItem) {
+
+        ContentValues objContentValues = new ContentValues();
+        objContentValues.put(COLUMN_Name, strName);
+        objContentValues.put(COLUMN_Surname, strSurname);
+        objContentValues.put(COLUMN_Address, strAddress);
+        objContentValues.put(COLUMN_Phone, strPhone);
+        objContentValues.put(COLUMN_Bread, strBread);
+        objContentValues.put(COLUMN_Price, strPrice);
+        objContentValues.put(COLUMN_Item, strItem);
+
+        return writeSqLiteDatabase.insert(TABLE_ORDER, null, objContentValues);
+    }
+
     public long addNewBread(String strBread,
                             String strPrice,
                             String strAmount,
