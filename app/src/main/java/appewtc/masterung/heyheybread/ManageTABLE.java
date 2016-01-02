@@ -30,6 +30,7 @@ public class ManageTABLE {
     public static final String COLUMN_Image = "Image";
 
     public static final String TABLE_ORDER = "orderTABLE";
+    public static final String COLUMN_Date = "Date";
     public static final String COLUMN_Item = "Item";
 
     public ManageTABLE(Context context) {
@@ -41,7 +42,8 @@ public class ManageTABLE {
 
     }   // Constructor
 
-    public long addNewOrder(String strName,
+    public long addNewOrder(String strDate,
+                            String strName,
                             String strSurname,
                             String strAddress,
                             String strPhone,
@@ -50,6 +52,7 @@ public class ManageTABLE {
                             String strItem) {
 
         ContentValues objContentValues = new ContentValues();
+        objContentValues.put(COLUMN_Date, strDate);
         objContentValues.put(COLUMN_Name, strName);
         objContentValues.put(COLUMN_Surname, strSurname);
         objContentValues.put(COLUMN_Address, strAddress);

@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
         objManageTABLE.addNewUser("testUser", "testPass", "testName",
                 "testSurname", "testAddress", "testPhone", "testComplacency");
         objManageTABLE.addNewBread("testBread", "testPrice", "testAmount", "testImage");
-        objManageTABLE.addNewOrder("testName", "testSurname", "testAddress", "testPhone",
+        objManageTABLE.addNewOrder("testDate", "testName", "testSurname", "testAddress", "testPhone",
                 "testBread", "testPrice", "testItem");
     }
 
