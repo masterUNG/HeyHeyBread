@@ -41,6 +41,20 @@ public class ManageTABLE {
 
     }   // Constructor
 
+    public long addNewBread(String strBread,
+                            String strPrice,
+                            String strAmount,
+                            String strImage) {
+
+        ContentValues objContentValues = new ContentValues();
+        objContentValues.put(COLUMN_Bread, strBread);
+        objContentValues.put(COLUMN_Price, strPrice);
+        objContentValues.put(COLUMN_Amount, strAmount);
+        objContentValues.put(COLUMN_Image, strImage);
+
+        return writeSqLiteDatabase.insert(TABLE_BREAD, null, objContentValues);
+    }
+
     public long addNewUser(String strUser,
                            String strPassword,
                            String strName,

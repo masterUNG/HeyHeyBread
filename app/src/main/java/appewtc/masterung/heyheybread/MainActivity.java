@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private void testAddValue() {
         objManageTABLE.addNewUser("testUser", "testPass", "testName",
                 "testSurname", "testAddress", "testPhone", "testComplacency");
+        objManageTABLE.addNewBread("testBread", "testPrice", "testAmount", "testImage");
     }
 
 }   // Main Class
