@@ -4,9 +4,20 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.ArrayList;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -86,6 +97,32 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void upDataMySQL() {
 
+        StrictMode.ThreadPolicy myPolicy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(myPolicy);
+
+        try {
+
+            String strURL = "http://swiftcodingthai.com/mos/php_add_data_master.php";
+
+            ArrayList<NameValuePair> objNameValuePairs = new ArrayList<NameValuePair>();
+            objNameValuePairs.add(new BasicNameValuePair("isAdd", "true"));
+            objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_User, userString));
+            objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Password, passwordString));
+            objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Name, nameString));
+            objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Surname, surnameString));
+            objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Address, addressString));
+            objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Phone, phoneString));
+
+            HttpClient objHttpClient = new DefaultHttpClient();
+            HttpPost objHttpPost = new HttpPost(strURL);
+            objHttpPost.setEntity(new UrlEncodedFormEntity(objNameValuePairs, "UTF-8"));
+            objHttpClient.execute(objHttpPost);
+
+            Toast.makeText(RegisterActivity.this, "Update Finish", Toast.LENGTH_SHORT).show();
+
+        } catch (Exception e) {
+            Toast.makeText(RegisterActivity.this, "Cannot Update mySQL", Toast.LENGTH_SHORT).show();
+        }
 
         //Intent To MainActivity
         startActivity(new Intent(RegisterActivity.this, MainActivity.class));
