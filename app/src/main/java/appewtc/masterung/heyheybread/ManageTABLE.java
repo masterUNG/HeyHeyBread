@@ -43,6 +43,38 @@ public class ManageTABLE {
 
     }   // Constructor
 
+    public String[] readAllBread(int intColumn) {
+
+        String[] resultStrings = null;
+        Cursor objCursor = readSqLiteDatabase.query(TABLE_BREAD,
+                new String[]{COLUMN_id, COLUMN_Bread, COLUMN_Price, COLUMN_Amount, COLUMN_Image},
+                null, null, null, null, null);
+
+        objCursor.moveToFirst();
+        int intRecord = objCursor.getCount();
+        resultStrings = new String[intRecord];
+        for (int i=0;i<intRecord;i++) {
+
+            switch (intColumn) {
+                case 1:
+                    resultStrings[i] = objCursor.getString(objCursor.getColumnIndex(COLUMN_Bread));
+                    break;
+                case 2:
+                    resultStrings[i] = objCursor.getString(objCursor.getColumnIndex(COLUMN_Price));
+                    break;
+                case 3:
+                    resultStrings[i] = objCursor.getString(objCursor.getColumnIndex(COLUMN_Amount));
+                    break;
+                case 4:
+                    resultStrings[i] = objCursor.getString(objCursor.getColumnIndex(COLUMN_Image));
+                    break;
+            }   // switch
+
+        }   // for
+
+        return resultStrings;
+    }
+
     public String[] searchUser(String strUser) {
 
         try {
