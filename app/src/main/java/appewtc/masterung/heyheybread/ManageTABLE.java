@@ -43,6 +43,25 @@ public class ManageTABLE {
 
     }   // Constructor
 
+    public String[] readAtPosition(int intID) {
+
+        String[] resultStrings = null;
+        Cursor objCursor = readSqLiteDatabase.query(TABLE_USER,
+                new String[]{COLUMN_id, COLUMN_Name, COLUMN_Surname,
+                        COLUMN_Address, COLUMN_Phone},
+                null, null, null, null, null);
+
+        objCursor.moveToFirst();
+        resultStrings = new String[objCursor.getColumnCount()];
+        objCursor.moveToPosition(intID);
+        for (int i=0;i<objCursor.getColumnCount();i++) {
+            resultStrings[i] = objCursor.getString(i);
+        }   // for
+        objCursor.close();
+
+        return resultStrings;
+    }
+
     public String[] readAllBread(int intColumn) {
 
         String[] resultStrings = null;

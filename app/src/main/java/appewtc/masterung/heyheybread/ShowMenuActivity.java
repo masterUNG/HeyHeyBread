@@ -2,8 +2,9 @@ package appewtc.masterung.heyheybread;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -56,7 +57,7 @@ public class ShowMenuActivity extends AppCompatActivity {
         objBuilder.setSingleChoiceItems(mySequences, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                int intItem = i + 1;
+                int intItem = i;
                 updateOrderToSQLite(breadString, priceString, intItem);
 
                 dialogInterface.dismiss();
@@ -69,6 +70,34 @@ public class ShowMenuActivity extends AppCompatActivity {
 
     private void updateOrderToSQLite(String breadString, String priceString, int intItem) {
 
+        String strID = getIntent().getStringExtra("ID");
+        int intID = Integer.parseInt(strID);
+        ManageTABLE objManageTABLE = new ManageTABLE(this);
+        String[] resultStrings = objManageTABLE.readAtPosition(intID);
+
+        addValueToSQLite(resultStrings[1],
+                resultStrings[2],
+                resultStrings[3],
+                resultStrings[4],
+                breadString,
+                priceString,
+                Integer.toString(intItem));
+
     }   // updateOrderToSQLite
+
+    private void addValueToSQLite(String strName, String strSurname,
+                                  String strAddress, String strPhone,
+                                  String strBread, String strPrice, String strItem) {
+
+        Log.d("hey", "Name = " + strName);
+        Log.d("hey", "Surname =" + strSurname);
+        Log.d("hey", "Address = " + strAddress);
+        Log.d("hey", "Phone = " + strPhone);
+        Log.d("hey", "Bread = " + strBread);
+        Log.d("hey", "Price = " + strPrice);
+        Log.d("hey", "Item = " + strItem);
+
+    }   // addValueToSQLite
+
 
 }   // Main Class
