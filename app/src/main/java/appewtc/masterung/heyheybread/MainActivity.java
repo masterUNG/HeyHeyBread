@@ -75,6 +75,25 @@ public class MainActivity extends AppCompatActivity {
 
     private void checkUser() {
 
+        try {
+
+            String[] resultStrings = objManageTABLE.searchUser(userString);
+            if (passwordString.equals(resultStrings[2])) {
+
+                Intent objIntent = new Intent(MainActivity.this, HubActivity.class);
+                objIntent.putExtra("ID", resultStrings[0]);
+                startActivity(objIntent);
+
+            } else {
+                MyAlertDialog objMyAlertDialog = new MyAlertDialog();
+                objMyAlertDialog.errorDialog(MainActivity.this, "Password False", "Please Try Again Password False");
+            }
+
+        } catch (Exception e) {
+            MyAlertDialog objMyAlertDialog = new MyAlertDialog();
+            objMyAlertDialog.errorDialog(MainActivity.this, "No This User", "No " + userString + " in my database");
+        }
+
     }   // checkUser
 
 
