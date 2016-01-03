@@ -42,6 +42,8 @@ public class ManageTABLE {
 
     }   // Constructor
 
+
+
     public long addNewOrder(String strDate,
                             String strName,
                             String strSurname,
