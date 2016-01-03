@@ -2,6 +2,7 @@ package appewtc.masterung.heyheybread;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 /**
@@ -42,7 +43,39 @@ public class ManageTABLE {
 
     }   // Constructor
 
+    public String[] searchUser(String strUser) {
 
+        try {
+
+            String[] resultStrings = null;
+            Cursor objCursor = readSqLiteDatabase.query(TABLE_USER,
+                    new String[]{COLUMN_id, COLUMN_User, COLUMN_Password,
+                            COLUMN_Name, COLUMN_Surname, COLUMN_Address,
+                            COLUMN_Phone, COLUMN_Complacency},
+                    COLUMN_User + "=?",
+                    new String[]{String.valueOf(strUser)},
+                    null, null, null, null);
+
+            if (objCursor != null) {
+                if (objCursor.moveToFirst()) {
+
+                    int intTimes = objCursor.getColumnCount();
+                    resultStrings = new String[intTimes];
+                    for (int i=0;i<intTimes;i++) {
+                        resultStrings[i] = objCursor.getString(i);
+                    }   // for
+
+                }   // if2
+            }   // if1
+            objCursor.close();
+            return resultStrings;
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        //return new String[0];
+    }
 
     public long addNewOrder(String strDate,
                             String strName,

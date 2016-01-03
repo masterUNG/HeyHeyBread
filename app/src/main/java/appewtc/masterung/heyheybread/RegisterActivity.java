@@ -37,6 +37,17 @@ public class RegisterActivity extends AppCompatActivity {
 
     }   // onCreate
 
+    public void clickCheck(View view) {
+
+        userString = userEditText.getText().toString().trim();
+        if (userString.equals("")) {
+            MyAlertDialog objMyAlertDialog = new MyAlertDialog();
+            objMyAlertDialog.errorDialog(RegisterActivity.this, "User ว่าง", "กรุณากรอก ที่ช่อง User ด้วย");
+        } else {
+        }
+
+    }   // clickCheck
+
     public void clickSave(View view) {
 
         //Check Space
