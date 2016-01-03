@@ -19,7 +19,11 @@ public class MenuAdapter extends BaseAdapter{
     private Context objContext;
     private String[] iconStrings, breadStrings, priceStrings, stockStrings;
 
-    public MenuAdapter(Context objContext, String[] iconStrings, String[] breadStrings, String[] priceStrings, String[] stockStrings) {
+    public MenuAdapter(Context objContext,
+                       String[] iconStrings,
+                       String[] breadStrings,
+                       String[] priceStrings,
+                       String[] stockStrings) {
         this.objContext = objContext;
         this.iconStrings = iconStrings;
         this.breadStrings = breadStrings;

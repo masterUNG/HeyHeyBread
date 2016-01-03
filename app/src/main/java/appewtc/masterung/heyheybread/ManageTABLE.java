@@ -70,8 +70,10 @@ public class ManageTABLE {
                     break;
             }   // switch
 
-        }   // for
+            objCursor.moveToNext();
 
+        }   // for
+        objCursor.close();
         return resultStrings;
     }
 
