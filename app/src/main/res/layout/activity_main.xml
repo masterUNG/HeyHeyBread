@@ -51,6 +51,7 @@
         <Button
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:onClick="clickLogin"
             android:text="Login"
             android:id="@+id/button"
             android:layout_weight="1" />

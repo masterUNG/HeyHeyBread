@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Bind Widget
+        bindWidget();
+
         //Connected Database
         objManageTABLE = new ManageTABLE(this);
 
@@ -47,6 +50,33 @@ public class MainActivity extends AppCompatActivity {
         synJSONtoSQLite();
 
     }   // onCreate
+
+    private void bindWidget() {
+        userEditText = (EditText) findViewById(R.id.editText);
+        passwordEditText = (EditText) findViewById(R.id.editText2);
+    }
+
+    public void clickLogin(View view) {
+
+        //Check Space
+        userString = userEditText.getText().toString().trim();
+        passwordString = passwordEditText.getText().toString().trim();
+
+        if (userString.equals("") || passwordString.equals("")) {
+            //Have Space
+            MyAlertDialog objMyAlertDialog = new MyAlertDialog();
+            objMyAlertDialog.errorDialog(MainActivity.this, "Have Space", "Please Fill All Every Blank");
+        } else {
+            //No Space
+            checkUser();
+        }
+
+    }   // clickLogin
+
+    private void checkUser() {
+
+    }   // checkUser
+
 
     private void synJSONtoSQLite() {
 
