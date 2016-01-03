@@ -18,7 +18,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".HubActivity"></activity>
+        <activity android:name=".HubActivity" />
+        <activity android:name=".ShowMenuActivity"></activity>
     </application>
 
 </manifest>
