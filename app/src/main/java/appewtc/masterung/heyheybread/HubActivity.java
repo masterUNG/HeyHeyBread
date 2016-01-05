@@ -1,6 +1,8 @@
 package appewtc.masterung.heyheybread;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -26,6 +28,8 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
         imageController();
 
     } // onCreate
+
+
 
     private void imageController() {
 
@@ -55,6 +59,7 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
                 startActivity(objIntent);
                 break;
             case R.id.imageView3:
+                clickReadOrder();
                 break;
             case R.id.imageView4:
                 break;
@@ -67,4 +72,18 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
 
 
     }   // onClick
+
+    private void clickReadOrder() {
+        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
+                MODE_PRIVATE, null);
+        Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM " + ManageTABLE.TABLE_ORDER, null);
+
+        if (objCursor.getCount() > 0) {
+            Intent objIntent = new Intent(HubActivity.this, ConfirmOrderActivity.class);
+            startActivity(objIntent);
+        } else {
+            MyAlertDialog objMyAlertDialog = new MyAlertDialog();
+            objMyAlertDialog.errorDialog(HubActivity.this,  "กรุณา Order", "กรุณาสั่ง อาหารด้วยคะ");
+        }
+    }
 }   // Main Class

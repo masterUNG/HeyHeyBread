@@ -2,6 +2,7 @@ package appewtc.masterung.heyheybread;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -37,7 +38,8 @@ public class ShowMenuActivity extends AppCompatActivity {
         if (objCursor.getCount() > 0) {
 
             //Have Data
-           // Intent objIntent = new Intent(ShowMenuActivity.this, )
+            Intent objIntent = new Intent(ShowMenuActivity.this, ConfirmOrderActivity.class);
+            startActivity(objIntent);
 
         } else {
 

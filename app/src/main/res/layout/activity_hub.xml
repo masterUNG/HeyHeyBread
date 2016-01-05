@@ -30,6 +30,7 @@
             <ImageView
                 android:layout_width="@dimen/icon"
                 android:layout_height="@dimen/icon"
+
                 android:id="@+id/imageView3"
                 android:src="@drawable/gray"
                 android:layout_weight="1" />

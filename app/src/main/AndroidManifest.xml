@@ -19,7 +19,8 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".HubActivity" />
-        <activity android:name=".ShowMenuActivity"></activity>
+        <activity android:name=".ShowMenuActivity" />
+        <activity android:name=".ConfirmOrderActivity"></activity>
     </application>
 
 </manifest>
