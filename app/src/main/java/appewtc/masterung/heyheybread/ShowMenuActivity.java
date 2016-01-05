@@ -57,7 +57,7 @@ public class ShowMenuActivity extends AppCompatActivity {
         objBuilder.setSingleChoiceItems(mySequences, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                int intItem = i;
+                int intItem = i + 1;
                 updateOrderToSQLite(breadString, priceString, intItem);
 
                 dialogInterface.dismiss();
@@ -71,9 +71,10 @@ public class ShowMenuActivity extends AppCompatActivity {
     private void updateOrderToSQLite(String breadString, String priceString, int intItem) {
 
         String strID = getIntent().getStringExtra("ID");
+        Log.d("hey", "ID ==> " + strID);
         int intID = Integer.parseInt(strID);
         ManageTABLE objManageTABLE = new ManageTABLE(this);
-        String[] resultStrings = objManageTABLE.readAtPosition(intID);
+        String[] resultStrings = objManageTABLE.readAtPosition(intID - 1);
 
         addValueToSQLite(resultStrings[1],
                 resultStrings[2],
