@@ -10,61 +10,76 @@
     tools:context="appewtc.masterung.heyheybread.ConfirmOrderActivity"
     android:background="@drawable/wall2">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/linButton"
-        android:layout_margin="15dp"
-        android:background="#96ffffff"
-        android:padding="15dp">
+        android:background="#96ffffff">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:padding="15dp"
+            android:layout_above="@+id/textView22">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/receive"
+                android:id="@+id/textView17"
+                android:textSize="@dimen/h1"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/textView18"
+                android:textSize="@dimen/h2"
+                android:layout_gravity="right" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/textView19"
+                android:layout_marginLeft="10dp"
+                android:textSize="@dimen/h2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/textView20"
+                android:textSize="@dimen/h2"
+                android:layout_marginLeft="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Text"
+                android:id="@+id/textView21"
+                android:textSize="@dimen/h2"
+                android:layout_marginLeft="10dp" />
+
+            <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listView2"
+                android:padding="15dp" />
+        </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/receive"
-            android:id="@+id/textView17"
+            android:text="New Text"
+            android:id="@+id/textView22"
             android:textSize="@dimen/h1"
-            android:layout_gravity="center_horizontal" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textView18"
-            android:textSize="@dimen/h2"
-            android:layout_gravity="right" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textView19"
-            android:layout_marginLeft="10dp"
-            android:textSize="@dimen/h2" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textView20"
-            android:textSize="@dimen/h2"
-            android:layout_marginLeft="10dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="New Text"
-            android:id="@+id/textView21"
-            android:textSize="@dimen/h2"
-            android:layout_marginLeft="10dp" />
-
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/listView2"
-            android:padding="15dp" />
-    </LinearLayout>
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
 
     <LinearLayout
         android:orientation="horizontal"
@@ -87,4 +102,5 @@
             android:id="@+id/button7"
             android:layout_weight="1" />
     </LinearLayout>
+
 </RelativeLayout>
