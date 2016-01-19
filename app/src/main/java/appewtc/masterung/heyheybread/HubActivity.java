@@ -33,6 +33,7 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
 
     private void imageController() {
 
+        //Receive ID user Login
         idString = getIntent().getStringExtra("ID");
         orderImageView.setOnClickListener(this);
         readOrderImageView.setOnClickListener(this);

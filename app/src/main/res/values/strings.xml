@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Hey hey Bread</string>
+
+    <string name="receive">ใบเสร็จรับเงิน</string>
+
+
 </resources>
