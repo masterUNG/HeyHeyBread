@@ -1,5 +1,7 @@
 package appewtc.masterung.heyheybread;
 
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.ListView;
@@ -10,7 +12,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     //Explicit
     private TextView dateTextView, nameTextView, addressTextView,
             phoneTextView, totalTextView;
-    private String dateString, nameString, addressString,
+    private String dateString, nameString, surnameString, addressString,
             phoneString, totalString;
     private ListView orderListView;
 
@@ -22,7 +24,37 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         //Bind Widget
         bindWidget();
 
+        //Read ALL Data
+        readAllData();
+
+        //Show View
+        showView();
+
     }   // Main Method
+
+    private void showView() {
+        dateTextView.setText("วันที่ " + dateString);
+        nameTextView.setText(nameString + " " + surnameString);
+        addressTextView.setText("ที่อยู่ " + addressString);
+        phoneTextView.setText("Phone = " + phoneString);
+    }
+
+    private void readAllData() {
+
+        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
+                MODE_PRIVATE, null);
+        Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM orderTABLE", null);
+        objCursor.moveToFirst();
+        dateString = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Date));
+        nameString = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Name));
+        surnameString = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Surname));
+        addressString = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Address));
+        phoneString = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Phone));
+
+
+
+        objCursor.close();
+    }   // readAllData
 
     private void bindWidget() {
 
