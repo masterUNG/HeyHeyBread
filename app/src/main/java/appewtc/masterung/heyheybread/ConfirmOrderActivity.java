@@ -104,14 +104,14 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     private void myDeleteOrder(int position) {
 
-        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
+        final SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE, null);
         Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM " + ManageTABLE.TABLE_ORDER, null);
         objCursor.moveToFirst();
         objCursor.moveToPosition(position);
         String strBread = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Bread));
         String strItem = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Item));
-        String strID = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_id));
+        final String strID = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_id));
         Log.d("Hay", "ID ==> " + strID);
 
 
@@ -123,6 +123,12 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         objBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
+                int intID = Integer.parseInt(strID);
+                objSqLiteDatabase.delete(ManageTABLE.TABLE_ORDER,
+                        ManageTABLE.COLUMN_id + "=" + intID, null );
+                readAllData();
+
                 dialogInterface.dismiss();
             }
         });
