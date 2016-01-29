@@ -15,6 +15,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private String dateString, nameString, surnameString, addressString,
             phoneString, totalString;
     private ListView orderListView;
+    private int totalAnInt = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         nameTextView.setText(nameString + " " + surnameString);
         addressTextView.setText("ที่อยู่ " + addressString);
         phoneTextView.setText("Phone = " + phoneString);
+        totalTextView.setText(Integer.toString(totalAnInt));
     }
 
     private void readAllData() {
@@ -67,6 +69,9 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             amountStrings[i] = Integer.toString( Integer.parseInt(itemStrings[i]) * Integer.parseInt(priceStrings[i]) );
 
             objCursor.moveToNext();
+
+            totalAnInt = totalAnInt + Integer.parseInt(amountStrings[i]);
+
         }   // for
 
         objCursor.close();
