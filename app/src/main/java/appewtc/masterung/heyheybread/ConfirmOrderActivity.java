@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -110,6 +111,9 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         objCursor.moveToPosition(position);
         String strBread = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Bread));
         String strItem = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Item));
+        String strID = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_id));
+        Log.d("Hay", "ID ==> " + strID);
+
 
         AlertDialog.Builder objBuilder = new AlertDialog.Builder(this);
         objBuilder.setIcon(R.drawable.icon_myaccount);
