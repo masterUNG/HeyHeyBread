@@ -127,8 +127,9 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 int intID = Integer.parseInt(strID);
                 objSqLiteDatabase.delete(ManageTABLE.TABLE_ORDER,
                         ManageTABLE.COLUMN_id + "=" + intID, null );
+                totalAnInt = 0;
                 readAllData();
-
+                totalTextView.setText(Integer.toString(totalAnInt));
                 dialogInterface.dismiss();
             }
         });
