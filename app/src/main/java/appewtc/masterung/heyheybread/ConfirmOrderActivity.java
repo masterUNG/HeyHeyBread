@@ -5,12 +5,23 @@ import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.ArrayList;
 
 public class ConfirmOrderActivity extends AppCompatActivity {
 
@@ -37,6 +48,65 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         showView();
 
     }   // Main Method
+
+    public void clickFinish(View view) {
+
+        //Read All orderTABLE
+        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
+                MODE_PRIVATE, null);
+        Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM " + ManageTABLE.TABLE_ORDER, null);
+        objCursor.moveToFirst();
+        for (int i=0;i<objCursor.getCount();i++) {
+
+            String strDate = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Date));
+            String strName = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Name));
+            String strSurname = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Surname));
+            String strAddress = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Address));
+            String strPhone = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Phone));
+            String strBread = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Bread));
+            String strPrice = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Price));
+            String strItem = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Item));
+
+            //Update to mySQL
+            StrictMode.ThreadPolicy myPolicy = new StrictMode.ThreadPolicy
+                    .Builder().permitAll().build();
+            StrictMode.setThreadPolicy(myPolicy);
+
+            try {
+
+                ArrayList<NameValuePair> objNameValuePairs = new ArrayList<NameValuePair>();
+                objNameValuePairs.add(new BasicNameValuePair("isAdd", "true"));
+                objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Date, strDate));
+                objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Name, strName));
+                objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Surname, strSurname));
+                objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Address, strAddress));
+                objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Phone, strPhone));
+                objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Bread, strBread));
+                objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Price, strPrice));
+                objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Item, strItem));
+
+                HttpClient objHttpClient = new DefaultHttpClient();
+                HttpPost objHttpPost = new HttpPost("http://swiftcodingthai.com/mos/php_add_order_master.php");
+                objHttpPost.setEntity(new UrlEncodedFormEntity(objNameValuePairs, "UTF-8"));
+                objHttpClient.execute(objHttpPost);
+
+                if (i == (objCursor.getCount() - 1)) {
+                    Toast.makeText(ConfirmOrderActivity.this, "Update Order Finish",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+
+            } catch (Exception e) {
+                Log.d("hey", "Error Cannot Update to mySQL ==> " + e.toString());
+            }
+
+            objCursor.moveToNext();
+
+        }   // for
+        objCursor.close();
+
+    }   // clickFinish
+
 
     public void clickMore(View view) {
         finish();
