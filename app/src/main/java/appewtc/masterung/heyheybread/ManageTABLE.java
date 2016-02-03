@@ -34,6 +34,8 @@ public class ManageTABLE {
     public static final String COLUMN_Date = "Date";
     public static final String COLUMN_Item = "Item";
 
+    public static final String TABLE_ORDER_FINISH = "orderTABLE_finish";
+
     public ManageTABLE(Context context) {
 
         //Create & Connected
@@ -169,7 +171,8 @@ public class ManageTABLE {
                             String strPhone,
                             String strBread,
                             String strPrice,
-                            String strItem) {
+                            String strItem,
+                            int intTABLE) {
 
         ContentValues objContentValues = new ContentValues();
         objContentValues.put(COLUMN_Date, strDate);

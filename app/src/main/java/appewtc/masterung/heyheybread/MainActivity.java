@@ -219,7 +219,7 @@ public class MainActivity extends AppCompatActivity {
                 "testSurname", "testAddress", "testPhone", "testComplacency");
         objManageTABLE.addNewBread("testBread", "testPrice", "testAmount", "testImage");
         objManageTABLE.addNewOrder("testDate", "testName", "testSurname", "testAddress", "testPhone",
-                "testBread", "testPrice", "testItem");
+                "testBread", "testPrice", "testItem", 0);
     }
 
 }   // Main Class

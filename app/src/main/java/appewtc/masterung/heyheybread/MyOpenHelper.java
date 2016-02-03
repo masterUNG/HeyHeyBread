@@ -41,6 +41,17 @@ public class MyOpenHelper extends SQLiteOpenHelper{
             "Price text, " +
             "Item text);";
 
+    private static final String CREATE_TABLE_ORDER_finish = "create table orderTABLE_finish (" +
+            "_id integer primary key, " +
+            "Date text, " +
+            "Name text, " +
+            "Surname text, " +
+            "Address text, " +
+            "Phone text, " +
+            "Bread text, " +
+            "Price text, " +
+            "Item text);";
+
     public MyOpenHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }   // Constructor
@@ -50,6 +61,7 @@ public class MyOpenHelper extends SQLiteOpenHelper{
         sqLiteDatabase.execSQL(CREATE_TABLE_USER);
         sqLiteDatabase.execSQL(CREATE_TABLE_BREAD);
         sqLiteDatabase.execSQL(CREATE_TABLE_ORDER);
+        sqLiteDatabase.execSQL(CREATE_TABLE_ORDER_finish);
     }
 
     @Override
