@@ -19,6 +19,9 @@ import java.util.Date;
 
 public class ShowMenuActivity extends AppCompatActivity {
 
+    //Explicit
+    private String strID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +42,7 @@ public class ShowMenuActivity extends AppCompatActivity {
 
             //Have Data
             Intent objIntent = new Intent(ShowMenuActivity.this, ConfirmOrderActivity.class);
+            objIntent.putExtra("idUser", strID);
             startActivity(objIntent);
 
         } else {
@@ -101,7 +105,7 @@ public class ShowMenuActivity extends AppCompatActivity {
 
     private void updateOrderToSQLite(String breadString, String priceString, int intItem) {
 
-        String strID = getIntent().getStringExtra("ID");
+        strID = getIntent().getStringExtra("ID");
         Log.d("hey", "ID ==> " + strID);
         int intID = Integer.parseInt(strID);
         ManageTABLE objManageTABLE = new ManageTABLE(this);
