@@ -39,12 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
         //Connected Database
         objManageTABLE = new ManageTABLE(this);
+        objManageTABLE.addNewOrderFinish("test", "test", "test", "test", "test", "test", "test", "test", "test");
 
         //Test Add New Value
         //testAddValue();
 
         //Delete All SQLite
-        deleteAllSQLite();
+       // deleteAllSQLite();
 
         //Synchronize JSON to SQLite
         synJSONtoSQLite();
@@ -103,12 +104,13 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.setThreadPolicy(myPolicy);
 
         int intTimes = 1;
-        while (intTimes <= 2) {
+        while (intTimes <= 3) {
 
             InputStream objInputStream = null;
             String strJSON = null;
             String strURLuser = "http://swiftcodingthai.com/mos/php_get_user_master.php";
             String strURLbread = "http://swiftcodingthai.com/mos/php_get_bread_master.php";
+            String strURLorder = "http://swiftcodingthai.com/mos/php_get_order_master.php";
 
             HttpPost objHttpPost = null;
 
@@ -123,6 +125,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case 2:
                         objHttpPost = new HttpPost(strURLbread);
+                        break;
+                    case 3:
+                        objHttpPost = new HttpPost(strURLorder);
                         break;
                 }   // switch
 
@@ -158,12 +163,12 @@ public class MainActivity extends AppCompatActivity {
 
                 JSONArray objJsonArray = new JSONArray(strJSON);
 
-                for (int i=0;i<objJsonArray.length();i++) {
+                for (int i = 0; i < objJsonArray.length(); i++) {
 
                     JSONObject object = objJsonArray.getJSONObject(i);
 
                     switch (intTimes) {
-                        case 1:
+                        case 1: // userTABLE
 
                             String strUser = object.getString(ManageTABLE.COLUMN_User);
                             String strPassword = object.getString(ManageTABLE.COLUMN_Password);
@@ -176,8 +181,10 @@ public class MainActivity extends AppCompatActivity {
                             objManageTABLE.addNewUser(strUser, strPassword, strName, strSurname,
                                     strAddress, strPhone, strComplacency);
 
+                            Log.d("error1", "case 1");
+
                             break;
-                        case 2:
+                        case 2: // breadTABLE
 
                             String strBread = object.getString(ManageTABLE.COLUMN_Bread);
                             String strPrice = object.getString(ManageTABLE.COLUMN_Price);
@@ -185,6 +192,29 @@ public class MainActivity extends AppCompatActivity {
                             String strImage = object.getString(ManageTABLE.COLUMN_Image);
 
                             objManageTABLE.addNewBread(strBread, strPrice, strAmount, strImage);
+
+                            Log.d("error1", "case 2");
+
+                            break;
+                        case 3: // orderTABLE
+
+                            Log.d("error1", "case 3");
+
+                            String stridReceive = object.getString(ManageTABLE.COLUMN_idReceive);
+                            String strDate = object.getString(ManageTABLE.COLUMN_Date);
+                            String strName1 = object.getString(ManageTABLE.COLUMN_Name);
+                            String strSurname1 = object.getString(ManageTABLE.COLUMN_Surname);
+                            String strAddress1 = object.getString(ManageTABLE.COLUMN_Address);
+                            String strPhone1 = object.getString(ManageTABLE.COLUMN_Phone);
+                            String strBread1 = object.getString(ManageTABLE.COLUMN_Bread);
+                            String strPrice1 = object.getString(ManageTABLE.COLUMN_Price);
+                            String strItem1 = object.getString(ManageTABLE.COLUMN_Item);
+
+                            objManageTABLE.addNewOrderFinish(stridReceive, strDate, strName1,
+                                    strSurname1, strAddress1, strPhone1, strBread1, strPrice1,
+                                    strItem1);
+
+
 
                             break;
                     }   // switch
@@ -195,6 +225,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d(TAG, "Update ==> " + e.toString());
             }
 
+            Log.d("error2", "Time = " + intTimes);
 
             intTimes += 1;
         }   // while
@@ -212,6 +243,7 @@ public class MainActivity extends AppCompatActivity {
         objSqLiteDatabase.delete(ManageTABLE.TABLE_USER, null, null);
         objSqLiteDatabase.delete(ManageTABLE.TABLE_BREAD, null, null);
         objSqLiteDatabase.delete(ManageTABLE.TABLE_ORDER, null, null);
+        objSqLiteDatabase.delete(ManageTABLE.TABLE_ORDER_FINISH, null, null);
     }
 
     private void testAddValue() {
@@ -219,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
                 "testSurname", "testAddress", "testPhone", "testComplacency");
         objManageTABLE.addNewBread("testBread", "testPrice", "testAmount", "testImage");
         objManageTABLE.addNewOrder("testDate", "testName", "testSurname", "testAddress", "testPhone",
-                "testBread", "testPrice", "testItem", 0);
+                "testBread", "testPrice", "testItem");
     }
 
 }   // Main Class

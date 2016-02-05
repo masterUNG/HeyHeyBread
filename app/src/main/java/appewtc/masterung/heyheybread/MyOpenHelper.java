@@ -43,6 +43,7 @@ public class MyOpenHelper extends SQLiteOpenHelper{
 
     private static final String CREATE_TABLE_ORDER_finish = "create table orderTABLE_finish (" +
             "_id integer primary key, " +
+            "idReceive text, "+
             "Date text, " +
             "Name text, " +
             "Surname text, " +

@@ -28,7 +28,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     //Explicit
     private TextView dateTextView, nameTextView, addressTextView,
-            phoneTextView, totalTextView;
+            phoneTextView, totalTextView, idReceiveTextView;
     private String dateString, nameString, surnameString, addressString,
             phoneString, totalString;
     private ListView orderListView;
@@ -230,6 +230,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         phoneTextView = (TextView) findViewById(R.id.textView21);
         totalTextView = (TextView) findViewById(R.id.textView22);
         orderListView = (ListView) findViewById(R.id.listView2);
+        idReceiveTextView = (TextView) findViewById(R.id.textView28);
 
     }   // bindWidget
 
