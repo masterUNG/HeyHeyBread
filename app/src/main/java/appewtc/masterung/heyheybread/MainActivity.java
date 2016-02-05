@@ -39,13 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
         //Connected Database
         objManageTABLE = new ManageTABLE(this);
-        objManageTABLE.addNewOrderFinish("test", "test", "test", "test", "test", "test", "test", "test", "test");
+
 
         //Test Add New Value
         //testAddValue();
 
         //Delete All SQLite
-       // deleteAllSQLite();
+        deleteAllSQLite();
 
         //Synchronize JSON to SQLite
         synJSONtoSQLite();
@@ -213,7 +213,6 @@ public class MainActivity extends AppCompatActivity {
                             objManageTABLE.addNewOrderFinish(stridReceive, strDate, strName1,
                                     strSurname1, strAddress1, strPhone1, strBread1, strPrice1,
                                     strItem1);
-
 
 
                             break;

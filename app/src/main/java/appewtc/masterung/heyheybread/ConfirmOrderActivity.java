@@ -45,10 +45,30 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         //Read ALL Data
         readAllData();
 
+        //Find ID receive
+        findIDreceive();
+
         //Show View
         showView();
 
     }   // Main Method
+
+    private void findIDreceive() {
+
+        SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
+                MODE_PRIVATE, null);
+        Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM " + ManageTABLE.TABLE_ORDER_FINISH, null);
+        objCursor.moveToFirst();
+        objCursor.moveToLast();
+
+        String strIDreceive = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_idReceive));
+        Log.d("Receive", "Receive Last = " + strIDreceive);
+
+        objCursor.close();
+
+
+
+    }   // findIDreceive
 
     public void clickFinish(View view) {
 
