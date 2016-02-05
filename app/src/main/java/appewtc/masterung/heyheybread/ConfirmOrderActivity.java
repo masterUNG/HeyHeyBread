@@ -64,6 +64,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         String strIDreceive = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_idReceive));
         Log.d("Receive", "Receive Last = " + strIDreceive);
 
+
+
         objCursor.close();
 
 
