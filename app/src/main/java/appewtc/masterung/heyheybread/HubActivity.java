@@ -75,6 +75,7 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
     }   // onClick
 
     private void clickReadOrder() {
+
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE, null);
         Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM " + ManageTABLE.TABLE_ORDER, null);

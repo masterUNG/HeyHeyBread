@@ -33,6 +33,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             phoneString, totalString;
     private ListView orderListView;
     private int totalAnInt = 0;
+    private String strCurrentIDReceive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +64,11 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
         String strIDreceive = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_idReceive));
         Log.d("Receive", "Receive Last = " + strIDreceive);
+
+        String[] idReceiveStrings = strIDreceive.split("#");
+        strCurrentIDReceive = idReceiveStrings[0] + "#" + Integer.toString((Integer.parseInt(idReceiveStrings[1]) + 1));
+        idReceiveTextView.setText(strCurrentIDReceive);
+        Log.d("Receive", "Receive current = " + strCurrentIDReceive);
 
 
 
@@ -99,6 +105,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
                 ArrayList<NameValuePair> objNameValuePairs = new ArrayList<NameValuePair>();
                 objNameValuePairs.add(new BasicNameValuePair("isAdd", "true"));
+                objNameValuePairs.add(new BasicNameValuePair("idReceive", strCurrentIDReceive));
                 objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Date, strDate));
                 objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Name, strName));
                 objNameValuePairs.add(new BasicNameValuePair(ManageTABLE.COLUMN_Surname, strSurname));
