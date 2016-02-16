@@ -128,7 +128,24 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
             } catch (Exception e) {
                 Log.d("hey", "Error Cannot Update to mySQL ==> " + e.toString());
+            }   // end of TryCase 1
+
+
+            try {
+
+                //Find Id Bread
+                ManageTABLE objManageTABLE = new ManageTABLE(this);
+                String[] resultStrings = objManageTABLE.searchBread(strBread);
+                Log.d("16Feb", "id bread " + strBread + " " + resultStrings[0]);
+
+
+
+
+            } catch (Exception e) {
+                Log.d("16Feb", "Cannot Delete Stock");
             }
+
+
 
             objCursor.moveToNext();
 
