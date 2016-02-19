@@ -46,8 +46,36 @@ public class ManageTABLE {
 
     }   // Constructor
 
+    public String[] searchBreadStock(String strBread) {
 
+        try {
 
+            String[] resultStrings = null;
+            Cursor objCursor = readSqLiteDatabase.query(TABLE_BREAD,
+                    new String[]{COLUMN_id, COLUMN_Bread, COLUMN_Amount},
+                    COLUMN_Bread + "=?",
+                    new String[]{String.valueOf(strBread)},
+                    null, null, null, null);
+
+            if (objCursor != null) {
+                if (objCursor.moveToFirst()) {
+
+                    resultStrings = new String[objCursor.getColumnCount()];
+                    for (int i = 0; i < objCursor.getColumnCount(); i++) {
+                        resultStrings[i] = objCursor.getString(i);
+                    }
+
+                }   //if2
+            }   //if1
+            objCursor.close();
+            return resultStrings;
+
+        } catch (Exception e) {
+            return null;
+        }
+
+        // return new String[0];
+    }   // searchBreadStock
 
 
     public String[] searchBread(String strBread) {

@@ -97,9 +97,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         Log.d("Receive", "Receive current = " + strCurrentIDReceive);
 
 
-
         objCursor.close();
-
 
 
     }   // findIDreceive
@@ -111,7 +109,12 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 MODE_PRIVATE, null);
         Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM " + ManageTABLE.TABLE_ORDER, null);
         objCursor.moveToFirst();
-        for (int i=0;i<objCursor.getCount();i++) {
+
+        //****************************************************************************************
+        // Update Stock
+        //****************************************************************************************
+
+        for (int i = 0; i < objCursor.getCount(); i++) {
 
             String strDate = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Date));
             String strName = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Name));
@@ -127,6 +130,13 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                     .Builder().permitAll().build();
             StrictMode.setThreadPolicy(myPolicy);
 
+            //Update breadTABLE
+            updateBreadStock(strBread, strItem);
+
+
+
+
+            // Update orderTABLE_mos
             try {
 
                 ArrayList<NameValuePair> objNameValuePairs = new ArrayList<NameValuePair>();
@@ -165,12 +175,9 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 Log.d("16Feb", "id bread " + strBread + " " + resultStrings[0]);
 
 
-
-
             } catch (Exception e) {
                 Log.d("16Feb", "Cannot Delete Stock");
             }
-
 
 
             objCursor.moveToNext();
@@ -192,6 +199,22 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
 
     }   // clickFinish
+
+    private void updateBreadStock(String strBread, String strItem) {
+
+        //หา ID ของ Bread
+        try {
+
+            ManageTABLE manageTABLE = new ManageTABLE(this);
+            String[] resultBread = manageTABLE.searchBreadStock(strBread);
+
+            Log.d("19Feb", "ID bread ==> " + resultBread[0]);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }   // updateBreadStock
 
 
     public void clickMore(View view) {
@@ -225,13 +248,13 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         String[] amountStrings = new String[objCursor.getCount()];
 
 
-        for (int i=0; i<objCursor.getCount();i++) {
+        for (int i = 0; i < objCursor.getCount(); i++) {
 
             nameOrderStrings[i] = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Bread));
             priceStrings[i] = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Price));
             itemStrings[i] = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Item));
             noStrings[i] = Integer.toString(i + 1);
-            amountStrings[i] = Integer.toString( Integer.parseInt(itemStrings[i]) * Integer.parseInt(priceStrings[i]) );
+            amountStrings[i] = Integer.toString(Integer.parseInt(itemStrings[i]) * Integer.parseInt(priceStrings[i]));
 
             objCursor.moveToNext();
 
@@ -282,7 +305,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
                 int intID = Integer.parseInt(strID);
                 objSqLiteDatabase.delete(ManageTABLE.TABLE_ORDER,
-                        ManageTABLE.COLUMN_id + "=" + intID, null );
+                        ManageTABLE.COLUMN_id + "=" + intID, null);
                 totalAnInt = 0;
                 readAllData();
                 totalTextView.setText(Integer.toString(totalAnInt));
