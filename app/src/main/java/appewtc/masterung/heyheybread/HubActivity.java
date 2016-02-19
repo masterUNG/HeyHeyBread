@@ -82,6 +82,7 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
 
         if (objCursor.getCount() > 0) {
             Intent objIntent = new Intent(HubActivity.this, ConfirmOrderActivity.class);
+            objIntent.putExtra("Status", true);
             startActivity(objIntent);
         } else {
             MyAlertDialog objMyAlertDialog = new MyAlertDialog();

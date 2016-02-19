@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +35,9 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private ListView orderListView;
     private int totalAnInt = 0;
     private String strCurrentIDReceive;
+    private Button moreButton, finishButton;
+    private boolean visibleStatus = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +46,9 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
         //Bind Widget
         bindWidget();
+
+        //Check Visible Button
+        checkVisible();
 
         //Read ALL Data
         readAllData();
@@ -53,6 +60,25 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         showView();
 
     }   // Main Method
+
+    private void checkVisible() {
+
+        try {
+
+            boolean myStatus = getIntent().getBooleanExtra("Status", false);
+
+            if (myStatus) {
+
+                moreButton.setVisibility(View.INVISIBLE);
+                finishButton.setVisibility(View.INVISIBLE);
+
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }   // checkVisible
 
     private void findIDreceive() {
 
@@ -157,6 +183,10 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         String strID = getIntent().getStringExtra("idUser");
         objIntent.putExtra("ID", strID);
         startActivity(objIntent);
+
+        //Delete orderTABLE
+        objSqLiteDatabase.delete(ManageTABLE.TABLE_ORDER, null, null);
+
 
     }   // clickFinish
 
@@ -277,6 +307,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         totalTextView = (TextView) findViewById(R.id.textView22);
         orderListView = (ListView) findViewById(R.id.listView2);
         idReceiveTextView = (TextView) findViewById(R.id.textView28);
+        moreButton = (Button) findViewById(R.id.button6);
+        finishButton = (Button) findViewById(R.id.button7);
 
     }   // bindWidget
 
