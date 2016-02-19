@@ -182,6 +182,9 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         Intent objIntent = new Intent(ConfirmOrderActivity.this, HubActivity.class);
         String strID = getIntent().getStringExtra("idUser");
         objIntent.putExtra("ID", strID);
+
+        Log.d("19Feb", "ID ที่ได้ ==> " + strID);
+
         startActivity(objIntent);
 
         //Delete orderTABLE
