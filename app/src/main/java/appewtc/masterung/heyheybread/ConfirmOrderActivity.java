@@ -205,6 +205,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         String tag = "updateBreadStock";
         int intCurrentStock;
         String strCurrentStock;
+        String strID;
 
         //หา ID ของ Bread
         try {
@@ -212,19 +213,52 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             ManageTABLE manageTABLE = new ManageTABLE(this);
             String[] resultBread = manageTABLE.searchBreadStock(strBread);
 
-            Log.d(tag, "ID bread ==> " + resultBread[0]);
-            Log.d(tag, "Stock ที่อ่านได้ จาก ID" + resultBread[2]);
+            strID = resultBread[0];
+            Log.d(tag, "ID bread ==> " + strID);
 
             intCurrentStock = Integer.parseInt(resultBread[2]) - Integer.parseInt(strItem);
             strCurrentStock = Integer.toString(intCurrentStock);
 
             Log.d(tag, "Current Storck ==> " + strCurrentStock);
 
+            //Edit Value on breadTABLE
+            editValueOnBreadTABLE(strID, strCurrentStock);
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }   // updateBreadStock
+
+    private void editValueOnBreadTABLE(String strID, String strCurrentStock) {
+
+        String tag = "updateBreadStock";
+
+        StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy
+                .Builder().permitAll().build();
+        StrictMode.setThreadPolicy(threadPolicy);
+
+        try {
+
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("isAdd", "true"));
+            nameValuePairs.add(new BasicNameValuePair("id", strID));
+            nameValuePairs.add(new BasicNameValuePair("Amount", strCurrentStock));
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost("http://swiftcodingthai.com/mos/php_edit_stock_mos.php");
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+            httpClient.execute(httpPost);
+
+            Log.d(tag, "Edit Finish");
+
+        } catch (Exception e) {
+            Log.d(tag, "ไม่สามารถ Edit ได้ " + e.toString());
+        }
+
+
+    }   // editValueOnBreadTABLE
 
 
     public void clickMore(View view) {
