@@ -202,13 +202,16 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     private void updateBreadStock(String strBread, String strItem) {
 
+        String tag = "updateBreadStock";
+
         //หา ID ของ Bread
         try {
 
             ManageTABLE manageTABLE = new ManageTABLE(this);
             String[] resultBread = manageTABLE.searchBreadStock(strBread);
 
-            Log.d("19Feb", "ID bread ==> " + resultBread[0]);
+            Log.d(tag, "ID bread ==> " + resultBread[0]);
+            Log.d(tag, "Stock ที่อ่านได้ จาก ID" + resultBread[2]);
 
         } catch (Exception e) {
             e.printStackTrace();
