@@ -203,6 +203,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private void updateBreadStock(String strBread, String strItem) {
 
         String tag = "updateBreadStock";
+        int intCurrentStock;
+        String strCurrentStock;
 
         //หา ID ของ Bread
         try {
@@ -212,6 +214,11 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
             Log.d(tag, "ID bread ==> " + resultBread[0]);
             Log.d(tag, "Stock ที่อ่านได้ จาก ID" + resultBread[2]);
+
+            intCurrentStock = Integer.parseInt(resultBread[2]) - Integer.parseInt(strItem);
+            strCurrentStock = Integer.toString(intCurrentStock);
+
+            Log.d(tag, "Current Storck ==> " + strCurrentStock);
 
         } catch (Exception e) {
             e.printStackTrace();
