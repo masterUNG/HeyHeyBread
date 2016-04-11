@@ -167,7 +167,7 @@ public class ShowMenuActivity extends AppCompatActivity {
         String[] iconStrings = new String[cursor.getCount()];
         final String[] breadStrings = new String[cursor.getCount()];
         final String[] priceStrings = new String[cursor.getCount()];
-        String[] stockStrings = new String[cursor.getCount()];
+        final String[] stockStrings = new String[cursor.getCount()];
 
         for (int i=0;i<cursor.getCount();i++) {
 
@@ -189,14 +189,16 @@ public class ShowMenuActivity extends AppCompatActivity {
         menuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                chooseItem(breadStrings[i], priceStrings[i]);
+                chooseItem(breadStrings[i], priceStrings[i], stockStrings[i]);
             }   // event
         });
 
 
     }   // listViewController
 
-    private void chooseItem(final String breadString, final String priceString) {
+    private void chooseItem(final String breadString,
+                            final String priceString,
+                            final String amountString) {
 
         CharSequence[] mySequences = {"1 ชิ้น", "2 ชิ้น", "3 ชิ้น", "4 ชิ้น", "5 ชิ้น",
                 "6 ชิ้น", "7 ชิ้น", "8 ชิ้น", "9 ชิ้น", "10 ชิ้น"};
@@ -207,10 +209,20 @@ public class ShowMenuActivity extends AppCompatActivity {
         objBuilder.setSingleChoiceItems(mySequences, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                int intItem = i + 1;
-                updateOrderToSQLite(breadString, priceString, intItem);
+                int intItem = i + 1;    // จำนวนที่สั่ง
+                int intStock = Integer.parseInt(amountString);
 
-                dialogInterface.dismiss();
+                if (intItem <= intStock) {
+
+                    updateOrderToSQLite(breadString, priceString, intItem);
+                    dialogInterface.dismiss();
+
+                } else {
+                    Toast.makeText(ShowMenuActivity.this, "ไม่ควรสั่งให้มากกว่า " + amountString,
+                            Toast.LENGTH_SHORT).show();
+                    dialogInterface.dismiss();
+                }
+
             }   // event
         });
 
