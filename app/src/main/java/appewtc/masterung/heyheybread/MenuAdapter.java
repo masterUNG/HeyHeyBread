@@ -17,18 +17,18 @@ public class MenuAdapter extends BaseAdapter{
 
     //Explicit
     private Context objContext;
-    private String[] iconStrings, breadStrings, priceStrings, stockStrings;
+    private String[] iconStrings, breadStrings, priceStrings;
 
     public MenuAdapter(Context objContext,
                        String[] iconStrings,
                        String[] breadStrings,
-                       String[] priceStrings,
-                       String[] stockStrings) {
+                       String[] priceStrings
+                       ) {
         this.objContext = objContext;
         this.iconStrings = iconStrings;
         this.breadStrings = breadStrings;
         this.priceStrings = priceStrings;
-        this.stockStrings = stockStrings;
+
     }   // Constructor
 
     @Override

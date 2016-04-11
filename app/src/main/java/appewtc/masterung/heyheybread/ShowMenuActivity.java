@@ -84,12 +84,12 @@ public class ShowMenuActivity extends AppCompatActivity {
 
                     String strBread = jsonObject.getString(ManageTABLE.COLUMN_Bread);
                     String strPrice = jsonObject.getString(ManageTABLE.COLUMN_Price);
-                    String strAmount = jsonObject.getString(ManageTABLE.COLUMN_Amount);
+
                     String strImage = jsonObject.getString(ManageTABLE.COLUMN_Image);
                     String strStatus = jsonObject.getString(ManageTABLE.COLUMN_Status);
 
                     ManageTABLE manageTABLE = new ManageTABLE(ShowMenuActivity.this);
-                    manageTABLE.addNewBread(strBread, strPrice, strAmount,
+                    manageTABLE.addNewBread(strBread, strPrice,
                             strImage, strStatus);
 
                 }   // for
@@ -160,20 +160,20 @@ public class ShowMenuActivity extends AppCompatActivity {
         // Setup Value
         SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE, null);
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM breadTABLE WHERE Status = '1' AND Amount != '0' ", null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM breadTABLE WHERE Status = '1'", null);
         cursor.moveToFirst();
 
         String[] iconStrings = new String[cursor.getCount()];
         final String[] breadStrings = new String[cursor.getCount()];
         final String[] priceStrings = new String[cursor.getCount()];
-        final String[] stockStrings = new String[cursor.getCount()];
+
 
         for (int i = 0; i < cursor.getCount(); i++) {
 
             iconStrings[i] = cursor.getString(cursor.getColumnIndex(ManageTABLE.COLUMN_Image));
             breadStrings[i] = cursor.getString(cursor.getColumnIndex(ManageTABLE.COLUMN_Bread));
             priceStrings[i] = cursor.getString(cursor.getColumnIndex(ManageTABLE.COLUMN_Price));
-            stockStrings[i] = cursor.getString(cursor.getColumnIndex(ManageTABLE.COLUMN_Amount));
+
 
             cursor.moveToNext();
         }   // for
@@ -181,7 +181,7 @@ public class ShowMenuActivity extends AppCompatActivity {
 
         ListView menuListView = (ListView) findViewById(R.id.listView);
         MenuAdapter objMenuAdapter = new MenuAdapter(ShowMenuActivity.this,
-                iconStrings, breadStrings, priceStrings, stockStrings);
+                iconStrings, breadStrings, priceStrings);
         menuListView.setAdapter(objMenuAdapter);
 
         //Active When Click ListView
