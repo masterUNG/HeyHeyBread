@@ -190,8 +190,10 @@ public class MainActivity extends AppCompatActivity {
                             String strPrice = object.getString(ManageTABLE.COLUMN_Price);
                             String strAmount = object.getString(ManageTABLE.COLUMN_Amount);
                             String strImage = object.getString(ManageTABLE.COLUMN_Image);
+                            String strStatus = object.getString(ManageTABLE.COLUMN_Status);
 
-                            objManageTABLE.addNewBread(strBread, strPrice, strAmount, strImage);
+                            objManageTABLE.addNewBread(strBread, strPrice,
+                                    strAmount, strImage, strStatus);
 
                             Log.d("error1", "case 2");
 
@@ -248,7 +250,7 @@ public class MainActivity extends AppCompatActivity {
     private void testAddValue() {
         objManageTABLE.addNewUser("testUser", "testPass", "testName",
                 "testSurname", "testAddress", "testPhone", "testComplacency");
-        objManageTABLE.addNewBread("testBread", "testPrice", "testAmount", "testImage");
+        objManageTABLE.addNewBread("testBread", "testPrice", "testAmount", "testImage", "testStatus");
         objManageTABLE.addNewOrder("testDate", "testName", "testSurname", "testAddress", "testPhone",
                 "testBread", "testPrice", "testItem");
     }
