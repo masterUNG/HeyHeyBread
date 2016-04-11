@@ -327,6 +327,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     private void myDeleteOrder(int position) {
 
+
+
         final SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE, null);
         Cursor objCursor = objSqLiteDatabase.rawQuery("SELECT * FROM " + ManageTABLE.TABLE_ORDER, null);
