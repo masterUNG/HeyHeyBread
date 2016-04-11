@@ -20,7 +20,7 @@ import java.util.Date;
 public class ShowMenuActivity extends AppCompatActivity {
 
     //Explicit
-    private String strID;
+    private String strID; // id ของ user ที่ login อยู่
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +60,32 @@ public class ShowMenuActivity extends AppCompatActivity {
 
         //Setup Value Array
         ManageTABLE objManageTABLE = new ManageTABLE(this);
-        String[] iconStrings = objManageTABLE.readAllBread(4);
-        final String[] breadStrings = objManageTABLE.readAllBread(1);
-        final String[] priceStrings = objManageTABLE.readAllBread(2);
-        String[] stockStrings = objManageTABLE.readAllBread(3);
+//        String[] iconStrings = objManageTABLE.readAllBread(4);
+//        final String[] breadStrings = objManageTABLE.readAllBread(1);
+//        final String[] priceStrings = objManageTABLE.readAllBread(2);
+//        String[] stockStrings = objManageTABLE.readAllBread(3);
+
+        // Setup Value
+        SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
+                MODE_PRIVATE, null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM breadTABLE WHERE Status = '1'", null);
+        cursor.moveToFirst();
+
+        String[] iconStrings = new String[cursor.getCount()];
+        final String[] breadStrings = new String[cursor.getCount()];
+        final String[] priceStrings = new String[cursor.getCount()];
+        String[] stockStrings = new String[cursor.getCount()];
+
+        for (int i=0;i<cursor.getCount();i++) {
+
+            iconStrings[i] = cursor.getString(cursor.getColumnIndex(ManageTABLE.COLUMN_Image));
+            breadStrings[i] = cursor.getString(cursor.getColumnIndex(ManageTABLE.COLUMN_Bread));
+            priceStrings[i] = cursor.getString(cursor.getColumnIndex(ManageTABLE.COLUMN_Price));
+            stockStrings[i] = cursor.getString(cursor.getColumnIndex(ManageTABLE.COLUMN_Amount));
+
+            cursor.moveToNext();
+        }   // for
+        cursor.close();
 
         ListView menuListView = (ListView) findViewById(R.id.listView);
         MenuAdapter objMenuAdapter = new MenuAdapter(ShowMenuActivity.this,

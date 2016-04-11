@@ -14,7 +14,7 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
     //Explicit
     private ImageView orderImageView, readOrderImageView,
             editImageView, mapImageView, complacencyImageView;
-    private String idString;
+    private String idString;    // Receive id ที่ user login อยู่
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
