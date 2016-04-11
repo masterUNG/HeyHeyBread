@@ -68,7 +68,14 @@ public class ShowMenuActivity extends AppCompatActivity {
         protected void onPostExecute(String strJSON) {
             super.onPostExecute(strJSON);
 
+            Log.d("11April", "strJSON ==> " + strJSON);
+
+
             try {
+                // Delete All breadTABLE
+                SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
+                        MODE_PRIVATE, null);
+                sqLiteDatabase.delete(ManageTABLE.TABLE_BREAD, null, null);
 
                 JSONArray jsonArray = new JSONArray(strJSON);
                 for (int i=0;i<jsonArray.length();i++) {
@@ -119,11 +126,6 @@ public class ShowMenuActivity extends AppCompatActivity {
 
     private void synBreadTABLE() {
 
-        SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
-                MODE_PRIVATE, null);
-
-        sqLiteDatabase.delete(ManageTABLE.TABLE_BREAD, null, null);
-
         MyConnectedBread myConnectedBread = new MyConnectedBread();
         myConnectedBread.execute();
 
@@ -155,13 +157,10 @@ public class ShowMenuActivity extends AppCompatActivity {
 
     private void listViewController() {
 
-        //Setup Value Array
-        ManageTABLE objManageTABLE = new ManageTABLE(this);
-
         // Setup Value
         SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE, null);
-        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM breadTABLE WHERE Status = '1'", null);
+        Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM breadTABLE WHERE Status = '1' AND Amount != '0' ", null);
         cursor.moveToFirst();
 
         String[] iconStrings = new String[cursor.getCount()];
@@ -209,19 +208,15 @@ public class ShowMenuActivity extends AppCompatActivity {
         objBuilder.setSingleChoiceItems(mySequences, -1, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+
                 int intItem = i + 1;    // จำนวนที่สั่ง
-                int intStock = Integer.parseInt(amountString);
+                int intStock = Integer.parseInt(amountString);  // จำนวนที่มีใน Stock
 
-                if (intItem <= intStock) {
+                //update to SQLite ภาษาไทยคือ พักไว้ที่ SQLite ยังไม่ขึ้นไปที่ mySQL
+                updateOrderToSQLite(breadString, priceString, intItem);
 
-                    updateOrderToSQLite(breadString, priceString, intItem);
-                    dialogInterface.dismiss();
-
-                } else {
-                    Toast.makeText(ShowMenuActivity.this, "ไม่ควรสั่งให้มากกว่า " + amountString,
-                            Toast.LENGTH_SHORT).show();
-                    dialogInterface.dismiss();
-                }
+                dialogInterface.dismiss();
+                synBreadTABLE();
 
             }   // event
         });

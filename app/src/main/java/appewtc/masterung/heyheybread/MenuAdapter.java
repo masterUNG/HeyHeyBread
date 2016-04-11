@@ -66,8 +66,8 @@ public class MenuAdapter extends BaseAdapter{
         TextView priceTextView = (TextView) objView1.findViewById(R.id.textView15);
         priceTextView.setText(priceStrings[i]);
 
-        TextView stockTextView = (TextView) objView1.findViewById(R.id.textView16);
-        stockTextView.setText(stockStrings[i]);
+//        TextView stockTextView = (TextView) objView1.findViewById(R.id.textView16);
+//        stockTextView.setText(stockStrings[i]);
 
         return objView1;
     }
