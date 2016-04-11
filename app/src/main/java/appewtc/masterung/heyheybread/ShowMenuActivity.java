@@ -78,7 +78,7 @@ public class ShowMenuActivity extends AppCompatActivity {
                 sqLiteDatabase.delete(ManageTABLE.TABLE_BREAD, null, null);
 
                 JSONArray jsonArray = new JSONArray(strJSON);
-                for (int i=0;i<jsonArray.length();i++) {
+                for (int i = 0; i < jsonArray.length(); i++) {
 
                     JSONObject jsonObject = jsonArray.getJSONObject(i);
 
@@ -168,7 +168,7 @@ public class ShowMenuActivity extends AppCompatActivity {
         final String[] priceStrings = new String[cursor.getCount()];
         final String[] stockStrings = new String[cursor.getCount()];
 
-        for (int i=0;i<cursor.getCount();i++) {
+        for (int i = 0; i < cursor.getCount(); i++) {
 
             iconStrings[i] = cursor.getString(cursor.getColumnIndex(ManageTABLE.COLUMN_Image));
             breadStrings[i] = cursor.getString(cursor.getColumnIndex(ManageTABLE.COLUMN_Bread));
@@ -188,7 +188,7 @@ public class ShowMenuActivity extends AppCompatActivity {
         menuListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                chooseItem(breadStrings[i], priceStrings[i], stockStrings[i]);
+                chooseItem(breadStrings[i], priceStrings[i]);
             }   // event
         });
 
@@ -196,8 +196,8 @@ public class ShowMenuActivity extends AppCompatActivity {
     }   // listViewController
 
     private void chooseItem(final String breadString,
-                            final String priceString,
-                            final String amountString) {
+                            final String priceString
+    ) {
 
         CharSequence[] mySequences = {"1 ชิ้น", "2 ชิ้น", "3 ชิ้น", "4 ชิ้น", "5 ชิ้น",
                 "6 ชิ้น", "7 ชิ้น", "8 ชิ้น", "9 ชิ้น", "10 ชิ้น"};
@@ -210,7 +210,7 @@ public class ShowMenuActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialogInterface, int i) {
 
                 int intItem = i + 1;    // จำนวนที่สั่ง
-                int intStock = Integer.parseInt(amountString);  // จำนวนที่มีใน Stock
+
 
                 //update to SQLite ภาษาไทยคือ พักไว้ที่ SQLite ยังไม่ขึ้นไปที่ mySQL
                 updateOrderToSQLite(breadString, priceString, intItem);
@@ -240,9 +240,6 @@ public class ShowMenuActivity extends AppCompatActivity {
                 breadString,
                 priceString,
                 Integer.toString(intItem));
-
-
-
 
 
     }   // updateOrderToSQLite
