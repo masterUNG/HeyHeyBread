@@ -20,7 +20,8 @@
         <activity android:name=".RegisterActivity" />
         <activity android:name=".HubActivity" />
         <activity android:name=".ShowMenuActivity" />
-        <activity android:name=".ConfirmOrderActivity"></activity>
+        <activity android:name=".ConfirmOrderActivity" />
+        <activity android:name=".EditUser"></activity>
     </application>
 
 </manifest>

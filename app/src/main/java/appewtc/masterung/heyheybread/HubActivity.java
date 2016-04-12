@@ -55,18 +55,36 @@ public class HubActivity extends AppCompatActivity implements View.OnClickListen
 
         switch (view.getId()) {
             case R.id.imageView2:
+
+                //Order Bread
                 Intent objIntent = new Intent(HubActivity.this, ShowMenuActivity.class);
                 objIntent.putExtra("ID", idString);
                 startActivity(objIntent);
+
                 break;
             case R.id.imageView3:
+                //Read Order
                 clickReadOrder();
+
                 break;
             case R.id.imageView4:
+
+                //Edit Account
+                Intent intent = new Intent(HubActivity.this, EditUser.class);
+                intent.putExtra("ID", idString);
+                startActivity(intent);
+
+
                 break;
             case R.id.imageView5:
+
+                //My Map
+
                 break;
             case R.id.imageView6:
+
+                //Complacency
+
                 break;
         }   // switch
 
