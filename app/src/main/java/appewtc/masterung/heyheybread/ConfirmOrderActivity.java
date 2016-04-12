@@ -47,6 +47,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private String strDate;
     private String strIDuser;
     private String strOrderNo;
+    private int orderDetailAnInt = 0;
 
 
     @Override
@@ -167,7 +168,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
     public void clickFinish(View view) {
 
-        Log.d("12April", "clickFinish OrderNo ล่าสุดที่อ่านได้ ==> " + strOrderNo);
+
 
         //Read All orderTABLE
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
@@ -234,7 +235,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 //Find Id Bread
                 ManageTABLE objManageTABLE = new ManageTABLE(this);
                 String[] resultStrings = objManageTABLE.searchBread(strBread);
-                Log.d("12April", "id bread ที่สั่งได้" + strBread + " " + resultStrings[0]);
+                Log.d("11April", "id bread ที่สั่งได้" + strBread + " " + resultStrings[0]);
 
 
             } catch (Exception e) {
@@ -244,7 +245,10 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             objCursor.moveToNext();
 
             //Update to tborderdetail on Server
+            Log.d("12April", "clickFinish OrderNo ล่าสุดที่อ่านได้ ==> " + strOrderNo);
 
+            orderDetailAnInt += 1;
+            Log.d("12April", "OrderDetailID(" +( i + 1 )+ ")" + orderDetailAnInt);
 
 
 
