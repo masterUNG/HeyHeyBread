@@ -169,7 +169,6 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     public void clickFinish(View view) {
 
 
-
         //Read All orderTABLE
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
                 MODE_PRIVATE, null);
@@ -195,8 +194,6 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy myPolicy = new StrictMode.ThreadPolicy
                     .Builder().permitAll().build();
             StrictMode.setThreadPolicy(myPolicy);
-
-
 
 
             // Update orderTABLE_mos
@@ -244,13 +241,38 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
             objCursor.moveToNext();
 
+
+            //****************************************************************************************
+            // Update tborderdetail
+            //****************************************************************************************
+
+
             //Update to tborderdetail on Server
             Log.d("12April", "clickFinish OrderNo ล่าสุดที่อ่านได้ ==> " + strOrderNo);
+            int intOrderNo = Integer.parseInt(strOrderNo) + 1;
+            String strNextOrderNo = Integer.toString(intOrderNo);
 
             orderDetailAnInt += 1;
-            Log.d("12April", "OrderDetailID(" +( i + 1 )+ ")" + orderDetailAnInt);
+            Log.d("12April", "OrderDetailID(" + (i + 1) + ")" + orderDetailAnInt);
+            String strOrderDetail = Integer.toString(orderDetailAnInt);
+
+            String strProductID = findProductID(strBread);
+            Log.d("12April", strBread + " มี id = " + strProductID);
 
 
+            int intAmount = Integer.parseInt(strItem);
+            int intPrice = Integer.parseInt(strPrice);
+            int PriceTotal = intAmount * intPrice;
+            String strPriceTotal = Integer.toString(PriceTotal);
+
+            Log.d("12April", "Amount * Price = " + intAmount + " x " + intPrice + " =  " + PriceTotal);
+
+            updateTotborderdetail(strNextOrderNo,
+                    strOrderDetail,
+                    strProductID,
+                    strItem,
+                    strPrice,
+                    strPriceTotal);
 
         }   // for
         objCursor.close();
@@ -262,14 +284,10 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
 
         //Update to tborder on Server
-            updateTotborder(strDate,
-                    strIDuser,
-                    Integer.toString(totalAnInt),
-                    "รอการชำระ");
-
-
-
-
+        updateTotborder(strDate,
+                strIDuser,
+                Integer.toString(totalAnInt),
+                "รอการชำระ");
 
 
         // Intent HubActivity
@@ -286,6 +304,34 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
 
     }   // clickFinish
+
+    private void updateTotborderdetail(String strOrderNo,
+                                       String strOrderDetail_ID,
+                                       String strProductID,
+                                       String strAmount,
+                                       String strPrice,
+                                       String strpriceTotal) {
+    }
+
+    private String findProductID(String strBread) {
+
+        String strProductID = null;
+
+        try {
+
+            SQLiteDatabase sqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
+                    MODE_PRIVATE, null);
+            Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM breadTABLE WHERE Bread = " + "'" + strBread + "'", null);
+            cursor.moveToFirst();
+            strProductID = cursor.getString(0);
+            return strProductID;
+
+        } catch (Exception e) {
+            return null;
+        }
+
+
+    }
 
     private void updateTotborder(String strDate,
                                  String strIDuser,
