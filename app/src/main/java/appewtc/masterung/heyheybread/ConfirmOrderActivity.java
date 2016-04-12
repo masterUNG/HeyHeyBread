@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v7.app.AppCompatActivity;
@@ -16,12 +17,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
+
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -38,8 +45,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private Button moreButton, finishButton;
     private boolean visibleStatus = false;
     private String strDate;
-
     private String strIDuser;
+    private String strOrderNo;
 
 
     @Override
@@ -64,7 +71,58 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         //Show View
         showView();
 
+        //Find Last OrderNo
+        findLastOrderNo();
+
     }   // Main Method
+
+    public class ConnectedOrderDetail extends AsyncTask<Void, Void, String> {
+
+        @Override
+        protected String doInBackground(Void... voids) {
+
+            try {
+
+                OkHttpClient okHttpClient = new OkHttpClient();
+                Request.Builder builder = new Request.Builder();
+                Request request = builder.url("http://swiftcodingthai.com/mos/php_get_last_orderdetail.php").build();
+                Response response = okHttpClient.newCall(request).execute();
+                return response.body().string();
+
+            } catch (Exception e) {
+                Log.d("12April", "doInBack ==> " + e.toString());
+                return null;
+            }
+
+        }   // doInBack
+
+        @Override
+        protected void onPostExecute(String strJSON) {
+            super.onPostExecute(strJSON);
+
+            try {
+
+                JSONArray jsonArray = new JSONArray(strJSON);
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                strOrderNo = jsonObject.getString("OrderNo");
+                Log.d("12April", "ค่าของ OrderNo ล่าสุดที่อ่านได้ ==> " + strOrderNo);
+
+            } catch (Exception e) {
+                Log.d("12April", "onPost ==> " + e.toString());
+            }
+
+        }   // onPost
+
+    }   // Connected Class
+
+
+    private void findLastOrderNo() {
+
+        ConnectedOrderDetail connectedOrderDetail = new ConnectedOrderDetail();
+        connectedOrderDetail.execute();
+
+
+    }
 
     private void checkVisible() {
 
@@ -108,6 +166,8 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     }   // findIDreceive
 
     public void clickFinish(View view) {
+
+        Log.d("12April", "clickFinish OrderNo ล่าสุดที่อ่านได้ ==> " + strOrderNo);
 
         //Read All orderTABLE
         SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
@@ -181,17 +241,29 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 Log.d("16Feb", "Cannot Delete Stock");
             }
 
-
             objCursor.moveToNext();
+
+            //Update to tborderdetail on Server
+
+
 
         }   // for
         objCursor.close();
+
+
+        //****************************************************************************************
+        // จุดเปลี่ยน
+        //****************************************************************************************
+
 
         //Update to tborder on Server
             updateTotborder(strDate,
                     strIDuser,
                     Integer.toString(totalAnInt),
                     "รอการชำระ");
+
+
+
 
 
 
