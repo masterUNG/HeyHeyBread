@@ -6,13 +6,15 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 public class EditUser extends AppCompatActivity {
 
     //Explicit
-    private EditText userEditText, passwordEditText,
+    private EditText passwordEditText,
             nameEditText, surnameEditText, addressEditText,
             phoneEditText;
+    private TextView userTextView;
     private String userString, passwordString, nameString,
             surnameString, addressString, phoneString;
 
@@ -43,7 +45,7 @@ public class EditUser extends AppCompatActivity {
         }   //for
         cursor.close();
 
-        userEditText.setText(resultStrings[1]);
+        userTextView.setText(resultStrings[1]);
         passwordEditText.setText(resultStrings[2]);
         nameEditText.setText(resultStrings[3]);
         surnameEditText.setText(resultStrings[4]);
@@ -55,7 +57,7 @@ public class EditUser extends AppCompatActivity {
 
     public void clickSaveEdit(View view) {
 
-        userString = userEditText.getText().toString().trim();
+
         passwordString = passwordEditText.getText().toString().trim();
         nameString = nameEditText.getText().toString().trim();
         surnameString = surnameEditText.getText().toString().trim();
@@ -70,16 +72,15 @@ public class EditUser extends AppCompatActivity {
             myAlertDialog.errorDialog(this, "มีช่องว่าง", "กรุณากรอกให้ครบทุกช่อง คะ");
 
         } else {
-
-            //checkUser
-
+            // OK
         }
 
     }   // clickSave
 
+
+
     private boolean checkSpace() {
-        return userString.equals("") ||
-                passwordString.equals("") ||
+        return passwordString.equals("") ||
                 nameString.equals("") ||
                 surnameString.equals("") ||
                 addressString.equals("") ||
@@ -91,7 +92,7 @@ public class EditUser extends AppCompatActivity {
     }   // clickCancel
 
     private void bindWidget() {
-        userEditText = (EditText) findViewById(R.id.editText3);
+        userTextView = (TextView) findViewById(R.id.editText3);
         passwordEditText = (EditText) findViewById(R.id.editText4);
         nameEditText = (EditText) findViewById(R.id.editText5);
         surnameEditText = (EditText) findViewById(R.id.editText6);

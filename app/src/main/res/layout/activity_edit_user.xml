@@ -65,12 +65,13 @@
                 android:textSize="@dimen/h2"
                 android:layout_weight="1" />
 
-            <EditText
+            <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/editText3"
                 android:layout_weight="2"
-                android:inputType="text" />
+                android:inputType="text"
+                android:textSize="@dimen/h2" />
         </LinearLayout>
 
         <LinearLayout
