@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
                     switch (intTimes) {
                         case 1: // userTABLE
 
-                            String strID = object.getString(ManageTABLE.COLUMN_id);
+                            String strID = object.getString("id");
                             String strUser = object.getString(ManageTABLE.COLUMN_User);
                             String strPassword = object.getString(ManageTABLE.COLUMN_Password);
                             String strName = object.getString(ManageTABLE.COLUMN_Name);
