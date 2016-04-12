@@ -234,7 +234,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                 //Find Id Bread
                 ManageTABLE objManageTABLE = new ManageTABLE(this);
                 String[] resultStrings = objManageTABLE.searchBread(strBread);
-                Log.d("16Feb", "id bread " + strBread + " " + resultStrings[0]);
+                Log.d("12April", "id bread ที่สั่งได้" + strBread + " " + resultStrings[0]);
 
 
             } catch (Exception e) {
@@ -244,6 +244,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             objCursor.moveToNext();
 
             //Update to tborderdetail on Server
+
 
 
 
