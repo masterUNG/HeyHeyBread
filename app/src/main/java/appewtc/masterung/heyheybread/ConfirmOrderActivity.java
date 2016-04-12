@@ -17,8 +17,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.FormEncodingBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
+import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
 import org.apache.http.NameValuePair;
@@ -30,6 +34,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class ConfirmOrderActivity extends AppCompatActivity {
@@ -311,7 +316,43 @@ public class ConfirmOrderActivity extends AppCompatActivity {
                                        String strAmount,
                                        String strPrice,
                                        String strpriceTotal) {
-    }
+
+        OkHttpClient okHttpClient = new OkHttpClient();
+        RequestBody requestBody = new FormEncodingBuilder()
+                .add("isAdd", "true")
+                .add("OrderNo", strOrderNo)
+                .add("OrderDetail_ID", strOrderDetail_ID)
+                .add("Product_ID", strProductID)
+                .add("Amount", strAmount)
+                .add("Price", strPrice)
+                .add("PriceTotal", strpriceTotal)
+                .build();
+
+        Request.Builder builder = new Request.Builder();
+        final Request request = builder.url("http://swiftcodingthai.com/mos/php_add_tborderdetail.php")
+                .post(requestBody).build();
+        Call call = okHttpClient.newCall(request);
+        call.enqueue(new Callback() {
+            @Override
+            public void onFailure(Request request, IOException e) {
+                Log.d("12April", "Fail to Upload");
+            }
+
+            @Override
+            public void onResponse(Response response) throws IOException {
+
+                try {
+                    Log.d("12April", "Finish to Upload" + response.body().string());
+                } catch (Exception e) {
+                    Log.d("12April", "Error upload ==> " + e.toString());
+                }
+
+            }
+        });
+
+
+
+    }   // updateTo
 
     private String findProductID(String strBread) {
 
