@@ -55,7 +55,36 @@ public class EditUser extends AppCompatActivity {
 
     public void clickSaveEdit(View view) {
 
+        userString = userEditText.getText().toString().trim();
+        passwordString = passwordEditText.getText().toString().trim();
+        nameString = nameEditText.getText().toString().trim();
+        surnameString = surnameEditText.getText().toString().trim();
+        addressString = addressEditText.getText().toString().trim();
+        phoneString = phoneEditText.getText().toString().trim();
+
+        //Check Space
+        if (checkSpace()) {
+
+            //Have Space
+            MyAlertDialog myAlertDialog = new MyAlertDialog();
+            myAlertDialog.errorDialog(this, "มีช่องว่าง", "กรุณากรอกให้ครบทุกช่อง คะ");
+
+        } else {
+
+            //checkUser
+
+        }
+
     }   // clickSave
+
+    private boolean checkSpace() {
+        return userString.equals("") ||
+                passwordString.equals("") ||
+                nameString.equals("") ||
+                surnameString.equals("") ||
+                addressString.equals("") ||
+                phoneString.equals("");
+    }
 
     public void clickCancelEdit(View view) {
         finish();
