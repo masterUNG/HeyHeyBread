@@ -170,6 +170,7 @@ public class MainActivity extends AppCompatActivity {
                     switch (intTimes) {
                         case 1: // userTABLE
 
+                            String strID = object.getString(ManageTABLE.COLUMN_id);
                             String strUser = object.getString(ManageTABLE.COLUMN_User);
                             String strPassword = object.getString(ManageTABLE.COLUMN_Password);
                             String strName = object.getString(ManageTABLE.COLUMN_Name);
@@ -178,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                             String strPhone = object.getString(ManageTABLE.COLUMN_Phone);
                             String strComplacency = object.getString(ManageTABLE.COLUMN_Complacency);
 
-                            objManageTABLE.addNewUser(strUser, strPassword, strName, strSurname,
+                            objManageTABLE.addNewUser(strID,strUser, strPassword, strName, strSurname,
                                     strAddress, strPhone, strComplacency);
 
                             Log.d("error1", "case 1");
@@ -248,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void testAddValue() {
-        objManageTABLE.addNewUser("testUser", "testPass", "testName",
+        objManageTABLE.addNewUser("id","testUser", "testPass", "testName",
                 "testSurname", "testAddress", "testPhone", "testComplacency");
         objManageTABLE.addNewBread("testBread", "testPrice", "testImage", "testStatus");
         objManageTABLE.addNewOrder("testDate", "testName", "testSurname", "testAddress", "testPhone",

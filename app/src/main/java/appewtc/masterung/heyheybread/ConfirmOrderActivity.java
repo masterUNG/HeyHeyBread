@@ -37,12 +37,17 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     private String strCurrentIDReceive;
     private Button moreButton, finishButton;
     private boolean visibleStatus = false;
+    private String strDate;
+
+    private String strIDuser;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_confirm_order);
+
+        strIDuser = getIntent().getStringExtra("idUser");
 
         //Bind Widget
         bindWidget();
@@ -116,7 +121,7 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
         for (int i = 0; i < objCursor.getCount(); i++) {
 
-            String strDate = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Date));
+            strDate = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Date));
             String strName = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Name));
             String strSurname = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Surname));
             String strAddress = objCursor.getString(objCursor.getColumnIndex(ManageTABLE.COLUMN_Address));
@@ -129,9 +134,6 @@ public class ConfirmOrderActivity extends AppCompatActivity {
             StrictMode.ThreadPolicy myPolicy = new StrictMode.ThreadPolicy
                     .Builder().permitAll().build();
             StrictMode.setThreadPolicy(myPolicy);
-
-            //Update breadTABLE
-            updateBreadStock(strBread, strItem);
 
 
 
@@ -185,6 +187,14 @@ public class ConfirmOrderActivity extends AppCompatActivity {
         }   // for
         objCursor.close();
 
+        //Update to tborder on Server
+            updateTotborder(strDate,
+                    strIDuser,
+                    Integer.toString(totalAnInt),
+                    "รอการชำระ");
+
+
+
         // Intent HubActivity
         Intent objIntent = new Intent(ConfirmOrderActivity.this, HubActivity.class);
         String strID = getIntent().getStringExtra("idUser");
@@ -199,6 +209,38 @@ public class ConfirmOrderActivity extends AppCompatActivity {
 
 
     }   // clickFinish
+
+    private void updateTotborder(String strDate,
+                                 String strIDuser,
+                                 String strSumtotal,
+                                 String strStatus) {
+
+        StrictMode.ThreadPolicy threadPolicy = new StrictMode.ThreadPolicy
+                .Builder().permitAll().build();
+        StrictMode.setThreadPolicy(threadPolicy);
+
+        try {
+
+            ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+            nameValuePairs.add(new BasicNameValuePair("isAdd", "true"));
+            nameValuePairs.add(new BasicNameValuePair("OrderDate", strDate));
+            nameValuePairs.add(new BasicNameValuePair("CustomerID", strIDuser));
+            nameValuePairs.add(new BasicNameValuePair("GrandTotal", strSumtotal));
+            nameValuePairs.add(new BasicNameValuePair("Status", strStatus));
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost("http://swiftcodingthai.com/mos/php_add_tborder_master.php");
+            httpPost.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
+            httpClient.execute(httpPost);
+
+            Log.i("11April", "Update Finish");
+
+        } catch (Exception e) {
+            Log.i("11April", "ไม่สามารถอัพไปที่ tborder ได้ จาก " + e.toString());
+        }
+
+
+    }   // updateTotborder
 
     private void updateBreadStock(String strBread, String strItem) {
 
@@ -326,7 +368,6 @@ public class ConfirmOrderActivity extends AppCompatActivity {
     }   // readAllData
 
     private void myDeleteOrder(int position) {
-
 
 
         final SQLiteDatabase objSqLiteDatabase = openOrCreateDatabase(MyOpenHelper.DATABASE_NAME,
