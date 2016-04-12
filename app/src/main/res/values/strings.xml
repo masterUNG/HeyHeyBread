@@ -2,6 +2,7 @@
     <string name="app_name">Hey hey Bread</string>
 
     <string name="receive">ใบเสร็จรับเงิน</string>
+    <string name="title_activity_maps">Map</string>
 
 
 </resources>
